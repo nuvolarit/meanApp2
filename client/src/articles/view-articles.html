@@ -1,0 +1,20 @@
+<table class="table table-strict table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Subtitle</th>
+            <th>Author</th>
+            <th>PubDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="#article of articles">
+            <td>{{article.id}}</td>
+            <td>{{article.title}}</td>
+            <td>{{article.subtitle}}</td>
+            <td>{{article.author}}</td>
+            <td>{{article.pubDate}}</td>
+        </tr>
+    </tbody>
+</table>
