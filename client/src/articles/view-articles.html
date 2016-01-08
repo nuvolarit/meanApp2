@@ -1,20 +1,30 @@
-<table class="table table-strict table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Subtitle</th>
-            <th>Author</th>
-            <th>PubDate</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="#article of articles">
-            <td>{{article.id}}</td>
-            <td>{{article.title}}</td>
-            <td>{{article.subtitle}}</td>
-            <td>{{article.author}}</td>
-            <td>{{article.pubDate}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <table class="table table-strict table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="#article of articles">
+                <th>{{article.id}}</th>
+                <td>{{article.title}}</td>
+                <td>{{article.author}}</td>
+                <td>{{article.pub_date}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<nav>
+    <ul class="pager">
+        <li [class.disabled]="page === 1">
+            <a (click)="prevPage()" href="#/">Previous</a>
+        </li>
+        <li [class.disabled]="page === maxPage">
+            <a (click)="nextPage()" href="#/">Next</a>
+        </li>
+    </ul>
+</nav>

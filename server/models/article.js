@@ -1,6 +1,7 @@
 // Dependencies
-var restful = require('node-restful');
-var mongoose = restful.mongoose;
+//var restful = require('node-restful');
+//var mongoose = restful.mongoose;
+var mongoose = require('mongoose');
 
 // Schema
 var articleSchema = new mongoose.Schema({
@@ -8,8 +9,9 @@ var articleSchema = new mongoose.Schema({
   title: String,
   subtitle: String,
   author: String,
-  pubDate: Date
+  pub_date: Date
 });
 
 // Return model
-module.exports = restful.model('Articles', articleSchema);
+//module.exports = restful.model('Articles', articleSchema);
+module.exports = mongoose.model('Articles', articleSchema);
