@@ -7,13 +7,8 @@ var articleService = require('../services/article');
 var Article = require('../models/article');
 
 // Routes
-/*
-Article.methods(['get', 'put', 'post', 'delete']);
-Article.register(router, '/articles');
-*/
-
 router.get('/articles/:page', function (req, res) {
-    console.log(req.params);
+
     articleService.getArticle(req.params.page, function (err, data) {
         res.send(data);
     });

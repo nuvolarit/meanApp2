@@ -1,11 +1,10 @@
-import { Component, View, OnInit } from "angular2/core";
+import { Component, View, OnInit, HostListener } from "angular2/core";
 import { Http, Headers } from "angular2/http";
+import { Pager } from "../Pager/pager";
 
 @Component({
-    selector: "articles"
-})
-
-@View({
+    selector: "articles",
+    directives: [Pager],
     templateUrl: "src/articles/view-articles.html"
 })
 
@@ -14,9 +13,6 @@ export class Articles implements OnInit {
     private http: Http;
     private articles = [];
 
-    private page: number = 1;
-    private maxPage: number = 10;
-
     constructor(http: Http) {
 
         this.http = http;
@@ -24,28 +20,14 @@ export class Articles implements OnInit {
 
     ngOnInit() {
 
-        this.navigateToPage();
+        this.navigateToPage(1);
     }
 
-    navigateToPage() {
-
-        this.http.get("http://localhost:3000/api/articles/" + this.page)
+    navigateToPage(page: number) {
+        
+        this.http.get("http://localhost:3000/api/articles/" + page)
             .subscribe(res => {
                 this.articles = res.json();
             });
-    }
-
-    prevPage() {
-
-        if (this.page === 1) { return; }
-        this.page--;
-        this.navigateToPage();
-    }
-
-    nextPage() {
-
-        if (this.page === this.maxPage) { return; }
-        this.page++;
-        this.navigateToPage();
     }
 }

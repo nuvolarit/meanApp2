@@ -18,13 +18,4 @@
         </tbody>
     </table>
 </div>
-<nav>
-    <ul class="pager">
-        <li [class.disabled]="page === 1">
-            <a (click)="prevPage()" href="#/">Previous</a>
-        </li>
-        <li [class.disabled]="page === maxPage">
-            <a (click)="nextPage()" href="#/">Next</a>
-        </li>
-    </ul>
-</nav>
+<pager (change)="navigateToPage($event)"></pager>
