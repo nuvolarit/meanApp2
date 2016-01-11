@@ -1,4 +1,4 @@
-import { Component, View, Output, EventEmitter } from "angular2/core";
+import { Component, View, Input, Output, EventEmitter } from "angular2/core";
 
 @Component({
     selector: "pager"
@@ -22,10 +22,12 @@ import { Component, View, Output, EventEmitter } from "angular2/core";
 export class Pager {
 
     private page: number = 1;
-    private maxPage: number = 10;
 
     @Output() change: EventEmitter<number> = new EventEmitter();
-
+    @Input() maxPage:number;
+    
+    constructor() { }
+    
     pagerOnClick(event: Event) {
 
         let button = (<HTMLElement>event.target);
