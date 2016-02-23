@@ -14,11 +14,17 @@ app.use(bodyParser.json());
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 // CORS Support
-app.use(function(req, res, next) {
-   res.header('Access-Control-Allow-Origin', '*');
-   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-   res.header('Access-Control-Allow-Content-Type', '*');
-   next(); 
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Content-Type', '*');
+    next();
+});
+
+app.use(function (req, res, next) {
+    console.log(`originalUrl: "${req.originalUrl}"`);
+    console.log(`query: ${JSON.stringify(req.query)}`);
+    next();
 });
 
 //Routes
@@ -27,3 +33,4 @@ app.use('/api', require('./routes/api'));
 //Start server
 app.listen(3000);
 console.log('API is running on port 3000');
+

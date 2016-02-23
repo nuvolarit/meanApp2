@@ -1,38 +1,61 @@
 var article = require('../models/article');
 var assert = require('assert');
-//var article = {};
 
-module.exports.getArticle = function (page, callback) {
+function getById(id, callback) {
 
-    var pageSize = 10;
-    var skip = 10 * (isNaN(page) ? 0 : (parseInt(page) - 1));
+    article.findById(id).exec(function (err, data) {
+        callback(err, {
+            data: data
+        });
+    });
+}
+
+function find(q, select, sort, skip, limit, callback) {
+
+    skip = isNaN(skip) ? 0 : parseInt(skip);
+    limit = isNaN(limit) ? 10 : parseInt(limit);
+    if (!sort) { sort = '-pub_date' }
+    if (!select) { select = 'title author pub_date' }
+    select = select.replace(',', ' ')
+    
+    article.find({ title: { $regex: `\\b${q}`, $options: 'i' } })
+        .skip(skip)
+        .limit(limit)
+        .select(select)
+        .sort(sort)
+        .exec(function (err, data) {
+            callback(err, {
+                q: q,
+                select: select,
+                sort: sort,
+                skip: skip,
+                limit: limit,
+                data: data
+            });
+        });
+}
+
+function getPage(page, callback) {
+
+    var limit = 10;
+    var skip = limit * (isNaN(page) ? 0 : (parseInt(page) - 1));
     var count = 0;
 
-    function find() {
-        article.find()
-            .skip(skip)
-            .limit(pageSize)
-            .exec(function (err, data) {
-                callback(err, {
-                    page: page,
-                    count: count,
-                    data: data
-                });
-            });
-    }
-    
     if (page == 1) {
         article.find()
             .count()
             .exec(function (err, data) {
                 count = data;
-                console.log(data);
-                find();
+                find(skip, limit, callback);
             });
     } else {
-        find();
+        find(skip, limit, callback);
     }
 }
 
-//module.exports = article;
+module.exports = {
+    getById: getById,
+    find: find,
+    getPage: getPage
+};
  
